@@ -14,12 +14,31 @@ module.exports = {
         }
       },
       {
-        test: /\.html$/,
+        test: /\.scss$/,
         use: [
           {
-            loader: "html-loader"
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
+          },
+          {
+            loader: "sass-loader"
           }
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"]
+      },
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: "html-loader",
+          options: {
+            attrs: [":data-src", "img:src", "link:href", "use:xlink:href"]
+          }
+        }
       }
     ]
   },
