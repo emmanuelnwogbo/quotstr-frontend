@@ -10,6 +10,18 @@ const Header = () => {
         <h1 className="header__h1">{headerH1}</h1>
         <p className="header__sub">{'scraped from the web with love'}</p>
       </div>
+      <div className="header__svgs">
+        <span className="header__svg">
+          <svg className="header--svg">
+            <use xlinkHref="./img/sprite.svg#icon-twitter2" />
+          </svg>
+        </span>
+        <span className="header__svg">
+          <svg className="header--svg">
+            <use xlinkHref="./img/sprite.svg#icon-github" />
+          </svg>
+        </span>
+      </div>
     </div>
   )
 }

@@ -1,16 +1,17 @@
 .header {
   text-align: center;
   display: flex;
+  flex-direction: column;
   align-content: center;
   justify-content: center;
   align-items: center;
-  height: 50rem;
+  height: 55rem;
   background: #f5f6fa;
   color: #000000;
 
   &__header {
     position: fixed;
-    z-index: 1000;
+    z-index: 4000;
     top: 0;
     left: 0;
     width: 100%;
@@ -24,7 +25,7 @@
     left: 0;
     font-size: 3rem;
     padding: 1rem;
-    z-index: 2000;
+    z-index: 5000;
     transition: all .4s ease;
 
     & p {
@@ -33,7 +34,7 @@
   }
 
   &__words {
-    line-height: 10rem;
+    line-height: 11rem;
   }
 
   &__h1 {
@@ -60,5 +61,28 @@
       bottom: 9%;
       transition: all .4s ease;
     }
+  }
+
+  &__svgs {
+    transform: translateY(-2rem);
+    display: flex;
+  }
+
+  &__svg {
+    display: inline-block;
+    margin: 0 1.5rem;
+    height: 5rem;
+    width: 5rem;
+    padding: .5rem;
+    border-radius: 50%;
+    border: solid 1px;
+    cursor: pointer;
+  }
+
+  &--svg {
+    height: 2.5rem;
+    width: 2.5rem;
+    //fill: RGB(205, 92, 92);
+    transform: translateY(.6rem);
   }
 }
