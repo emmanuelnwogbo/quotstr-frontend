@@ -29,7 +29,7 @@ class Content extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3000/", { headers: {
+    axios.get("https://polar-shelf-78995.herokuapp.com/", { headers: {
         "limitstart": this.state.limitstart,
         "limitend": this.state.limitend
       }
@@ -48,7 +48,7 @@ class Content extends React.Component {
                 limitend: prevState.limitend+7
               }
             }, () => {
-              axios.get("http://localhost:3000/", { headers: {
+              axios.get("https://polar-shelf-78995.herokuapp.com/", { headers: {
                   "limitstart": this.state.limitstart,
                   "limitend": this.state.limitend
                 }
