@@ -62,6 +62,7 @@ class Content extends React.Component {
                 }, () => {
                   if (this.state.quotes.length > 99) {
                     this.state.loader.style.display = `none`
+                    //wtf
                   }
                 })
               })
