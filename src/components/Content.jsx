@@ -42,8 +42,7 @@ class Content extends React.Component {
       }, () => {
         window.onscroll = () => {
           if (
-            window.innerHeight + document.documentElement.scrollTop
-            === document.documentElement.offsetHeight
+          this.state.loader.getBoundingClientRect().bottom < 1000
           ) {
             console.log('hello there get more data pls')
             this.setState(prevState => {
