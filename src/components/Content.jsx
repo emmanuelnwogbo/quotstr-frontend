@@ -40,23 +40,25 @@ class Content extends React.Component {
           loader: document.getElementById('loader--animation')
         }
       }, () => {
-        window.addEventListener('scroll', () => {
-          if (this.state.loader.getBoundingClientRect().bottom < 1000) {
-            this.setState(prevState => {
-              return {
-                limitstart: prevState.limitend+1,
-                limitend: prevState.limitend+7
-              }
+        window.onscroll = () => {
+          if (
+            window.innerHeight + document.documentElement.scrollTop
+            === document.documentElement.offsetHeight
+          ) {
+            this.setState({
+              limitstart: this.state.limitend+1,
+              limitend: this.state.limitend+7
             }, () => {
               axios.get("https://polar-shelf-78995.herokuapp.com/", { headers: {
                   "limitstart": this.state.limitstart,
                   "limitend": this.state.limitend
                 }
               }).then(res => {
-                this.setState(prevState => {
-                  return {
-                    quotes: [...prevState.quotes, ...res.data.quotes]
-                  }
+                this.setState({
+                  quotes: [
+                    ...this.state.quotes,
+                    ...res.data.quotes
+                  ]
                 }, () => {
                   if (this.state.quotes.length > 99) {
                     this.state.loader.style.display = `none`
@@ -65,7 +67,7 @@ class Content extends React.Component {
               })
             })
           }
-        })
+        };
       })
     }).catch(err => {
       console.log(err)

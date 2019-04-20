@@ -25,3 +25,15 @@ const playFun = () => {
     })
   })
 }
+
+this.setState({
+            // Note: Depending on the API you're using, this value may
+            // be returned as part of the payload to indicate that there
+            // is no additional data to be loaded
+            hasMore: (this.state.users.length < 100),
+            isLoading: false,
+            users: [
+              ...this.state.users,
+              ...nextUsers,
+            ],
+          });
