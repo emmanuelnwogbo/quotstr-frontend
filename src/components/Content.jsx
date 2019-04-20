@@ -45,6 +45,7 @@ class Content extends React.Component {
             window.innerHeight + document.documentElement.scrollTop
             === document.documentElement.offsetHeight
           ) {
+            console.log('hello there get more data pls')
             this.setState(prevState => {
               return {
                 limitstart: prevState.limitend+1,
