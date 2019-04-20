@@ -45,9 +45,11 @@ class Content extends React.Component {
             window.innerHeight + document.documentElement.scrollTop
             === document.documentElement.offsetHeight
           ) {
-            this.setState({
-              limitstart: this.state.limitend+1,
-              limitend: this.state.limitend+7
+            this.setState(prevState => {
+              return {
+                limitstart: prevState.limitend+1,
+                limitend: prevState.limitend+7
+              }
             }, () => {
               axios.get("https://polar-shelf-78995.herokuapp.com/", { headers: {
                   "limitstart": this.state.limitstart,
