@@ -8,6 +8,9 @@ const App = () => {
     <div className="app">
       <Header />
       <Content />
+      <div className="loader" id="loader">
+        <div className="loader--animation" id="loader--animation"></div>
+      </div>
     </div>
   )
 }

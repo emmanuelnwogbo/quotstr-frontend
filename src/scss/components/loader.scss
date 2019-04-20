@@ -1,0 +1,19 @@
+.loader {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 3rem;
+  &--animation {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    border: .5rem solid;
+    border-color:  rgba(47, 53, 66,.3) rgba(47, 53, 66,.3) rgba(47, 53, 66,.3) rgba(47, 53, 66,1.0);
+    transition: all .5s ease-in;
+    background: transparent;
+    position: relative;
+    animation: spin 1s linear 1s infinite;
+    margin: 0 auto;
+  }
+}
