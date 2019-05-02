@@ -1,60 +1,92 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const webpack = require('webpack');
+const path = require('path');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = {
-  entry: "./src/index.js",
+const config = {
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "js/bundle.js"
-  },
-  devServer: {
-    contentBase: "./src"
-  },
-  resolve: {
-    extensions: ["*", ".js", ".jsx"]
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        use: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ],
+        exclude: /\.module\.css$/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+        ],
+        include: /\.module\.css$/
       },
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "sass-loader"
-          }
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: ["file-loader"]
+        test: /\.svg$/,
+        use: 'file-loader'
       },
       {
-        test: /\.(html)$/,
-        use: {
-          loader: "html-loader",
-          options: {
-            attrs: [":data-src", "img:src", "link:href", "use:xlink:href"]
+        test: /\.png$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              mimetype: 'image/png'
+            }
           }
-        }
+        ]
       }
     ]
   },
+  resolve: {
+    extensions: [
+      '.js',
+      '.jsx'
+    ]
+  },
+  devServer: {
+    contentBase: './dist',
+    port: 3030
+  },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html"
-    })
-  ]
-};
+    new LodashModuleReplacementPlugin,
+    new HtmlWebpackPlugin({
+        template: require('html-webpack-template'),
+        inject: false,
+        appMountId: 'app',
+      })
+  ],
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\\/]node_modules[\\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  }
+}
+
+module.exports = config;
