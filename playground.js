@@ -25,3 +25,9 @@ const playFun = () => {
     })
   })
 }
+
+/*
+<svg>
+  <use xlinkHref="./img/sprite.svg#icon-pause" />
+</svg>
+*/

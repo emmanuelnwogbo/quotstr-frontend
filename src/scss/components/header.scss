@@ -1,0 +1,53 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 6.5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  background: rgba(64, 64, 122,1.0);
+  margin-bottom: 2rem;
+  z-index: 2000;
+
+  &--contents {
+    position: relative;
+    margin: 0 auto;
+    width: 60%;
+    height: 100%;
+    padding: 4rem;
+    color: #fff;
+  }
+
+  &__name {
+    position: absolute;
+    font-weight: 700;
+    left: 0;
+    top: 0;
+    padding: 2rem;
+    cursor: pointer;
+
+    &--quotstr {
+      position: relative;
+      display: inline-block;
+      font-size: 2.8rem;
+      margin-right: 1.5rem;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 23%;
+        height: 3%;
+        background: #fff;
+        bottom: 26%;
+        left: 35%;
+        transform: translateY(.8rem);
+      }
+    }
+
+    &--sub {
+      display: inline-block;
+      font-size: 1.7rem;
+      transform: translateY(-.2rem);
+    }
+  }
+}
