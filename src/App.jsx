@@ -10,9 +10,24 @@ class App extends Component {
     super(props);
     this.state = {
       quotes: [],
-      limitend: 1,
-      AsyncComponent: null
+      limitend: 20,
+      AsyncComponent: null,
+      limit: 9,
+      results: 9,
+      quotesLength: null
     };
+
+    window.onscroll = () => {
+      const {
+        loadMore
+      } = this;
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        === document.documentElement.offsetHeight
+      ) {
+        loadMore();
+      }
+    }
   }
 
   componentDidMount() {
@@ -23,17 +38,60 @@ class App extends Component {
     .then(res => {
       console.log(res.data.quotes)
       const { quotes } = res.data;
+      const quotesLength = quotes.length;
       this.setState(prevState => {
         return {
-          quotes: [...prevState.quotes, ...quotes]
+          quotes: [...prevState.quotes, ...quotes],
+          quotesLength
         }
       }, () => {
+        console.log(this.state)
         this.importAsyncComponent()
       })
     })
   .catch(err => {
     console.log(err)
     })
+  }
+
+  loadMore = () => {
+    if (this.state.limit < this.state.quotesLength && this.state.quotes.length < 120) {
+      return this.setState(prevState => {
+        return {
+          limit: prevState.limit + 10,
+          results: prevState.results + 10
+        }
+      })
+    }
+    else if (this.state.limit >= this.state.quotesLength && this.state.quotes.length < 120) {
+      return this.setState(prevState => {
+        return {
+          limit: 0,
+          limitend: prevState.limitend + 20
+        }
+      }, () => {
+        axios.get('https://polar-shelf-78995.herokuapp.com/', { headers: {
+          "limitend": this.state.limitend
+          }
+        })
+        .then(res => {
+          console.log(res)
+          const { quotes } = res.data;
+          const quotesLength = quotes.length;
+          this.setState(prevState => {
+            return {
+              quotes: [...prevState.quotes, ...quotes],
+              quotesLength
+            }
+          }, () => {
+            console.log(this.state)
+          })
+        })
+      })
+    }
+    else {
+      return console.log('all quotes gotten')
+    }
   }
 
   importAsyncComponent = () => {
@@ -56,7 +114,8 @@ class App extends Component {
       <div className="app">
         <Header />
         { this.importComponents('Content', {
-          quotes: this.state.quotes
+          quotes: this.state.quotes,
+          results: this.state.results
         }) }
       </div>
     )

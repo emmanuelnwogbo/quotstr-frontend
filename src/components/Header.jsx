@@ -8,7 +8,7 @@ const Header = () => {
       <div className="header--contents">
       <div className="header__name">  
         <p className="header__name--quotstr">Quotstr</p>
-        <p className="header__name--sub">quotes scraped from the web with love</p>
+        <p className="header__name--sub">quotes scraped from the web with love... and Python</p>
       </div>
       </div>
     </div>
