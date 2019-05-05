@@ -8,15 +8,14 @@ class Content extends Component {
     this.state = {
       quotes: null,
       AsyncComponent: null,
-      quoteComponent: null,
-      results: null
+      quoteComponent: null
     }
   }
 
   componentDidMount() {
     if (this.props.componentOptions.quotes) {
-      const { quotes, results } = this.props.componentOptions
-      this.setState({ quotes, results }, () => {
+      const { quotes } = this.props.componentOptions
+      this.setState({ quotes }, () => {
         this.importAsyncComponent()
       })
     }
@@ -46,9 +45,7 @@ class Content extends Component {
   renderQuotes = () => {
     if (this.state.quotes !== null && this.state.quoteComponent !== null) {
       return this.state.quotes.map(quote => {
-        if (this.state.quotes.indexOf(quote) <= this.state.results) {
-          return this.renderQuote(quote);
-        }
+        return this.renderQuote(quote);
       })
     }
     return;

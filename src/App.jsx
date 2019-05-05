@@ -14,7 +14,8 @@ class App extends Component {
       AsyncComponent: null,
       limit: 9,
       results: 9,
-      quotesLength: null
+      loader: 'block',
+      unrenderedQuotes: []
     };
 
     window.onscroll = () => {
@@ -22,8 +23,7 @@ class App extends Component {
         loadMore
       } = this;
       if (
-        window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
+        (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500)
       ) {
         loadMore();
       }
@@ -36,16 +36,15 @@ class App extends Component {
       }
     })
     .then(res => {
-      console.log(res.data.quotes)
       const { quotes } = res.data;
-      const quotesLength = quotes.length;
+      const renderedQuotes = quotes.filter(quote =>  quotes.indexOf(quote) <= this.state.limit);
+      const unrenderedQuotes = quotes.filter(quote => quotes.indexOf(quote) > this.state.limit);
       this.setState(prevState => {
         return {
-          quotes: [...prevState.quotes, ...quotes],
-          quotesLength
+          quotes: [...prevState.quotes, ...renderedQuotes],
+          unrenderedQuotes
         }
       }, () => {
-        console.log(this.state)
         this.importAsyncComponent()
       })
     })
@@ -55,42 +54,50 @@ class App extends Component {
   }
 
   loadMore = () => {
-    if (this.state.limit < this.state.quotesLength && this.state.quotes.length < 120) {
+    if (this.state.quotes.length >= 80) {
       return this.setState(prevState => {
         return {
-          limit: prevState.limit + 10,
-          results: prevState.results + 10
+          quotes: [...prevState.quotes, ...prevState.unrenderedQuotes],
+          unrenderedQuotes: [],
+          loader: 'none'
+        }
+      });
+    }
+
+    if (this.state.limit <= 9) {
+      return this.setState(prevState => {
+        return {
+          limit: 10,
+          quotes: [...prevState.quotes, ...prevState.unrenderedQuotes],
+          unrenderedQuotes: []
         }
       })
     }
-    else if (this.state.limit >= this.state.quotesLength && this.state.quotes.length < 120) {
+
+    if (this.state.limit > 9) {
       return this.setState(prevState => {
         return {
-          limit: 0,
-          limitend: prevState.limitend + 20
+          limit: 9,
+          limitend: prevState.limitend+20
         }
       }, () => {
         axios.get('https://polar-shelf-78995.herokuapp.com/', { headers: {
-          "limitend": this.state.limitend
+            "limitend": this.state.limitend
           }
-        })
-        .then(res => {
-          console.log(res)
+        }).then(res => {
+          //console.log(res.data.quotes)
           const { quotes } = res.data;
-          const quotesLength = quotes.length;
+          const renderedQuotes = quotes.filter(quote =>  quotes.indexOf(quote) <= this.state.limit);
+          const unrenderedQuotes = quotes.filter(quote => quotes.indexOf(quote) > this.state.limit);
+          //console.log(renderedQuotes)
           this.setState(prevState => {
             return {
-              quotes: [...prevState.quotes, ...quotes],
-              quotesLength
+              quotes: [...prevState.quotes, ...renderedQuotes],
+              unrenderedQuotes
             }
-          }, () => {
-            console.log(this.state)
           })
         })
-      })
-    }
-    else {
-      return console.log('all quotes gotten')
+      });
     }
   }
 
@@ -117,6 +124,7 @@ class App extends Component {
           quotes: this.state.quotes,
           results: this.state.results
         }) }
+        <div className="loader" style={{display: this.state.loader}}><div className="loader--animation"></div></div>
       </div>
     )
   }

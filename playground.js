@@ -180,3 +180,41 @@ class InfiniteUsers extends Component {
   }
 }
 
+if (this.state.quotes.length >= 100) {
+  this.setState({loader: 'none'})
+  return console.log('all quotes gotten')
+}
+else if (this.state.limit < this.state.quotesLength) {
+  return this.setState(prevState => {
+    return {
+      limit: prevState.limit + 10,
+      results: prevState.results + 10
+    }
+  })
+}
+else if (this.state.limit >= this.state.quotesLength) {
+  return this.setState(prevState => {
+    return {
+      limit: 0,
+      limitend: prevState.limitend + 20
+    }
+  }, () => {
+    axios.get('https://polar-shelf-78995.herokuapp.com/', { headers: {
+      "limitend": this.state.limitend
+      }
+    })
+    .then(res => {
+      console.log(res)
+      const { quotes } = res.data;
+      const quotesLength = quotes.length;
+      this.setState(prevState => {
+        return {
+          quotes: [...prevState.quotes, ...quotes],
+          quotesLength
+        }
+      }, () => {
+        console.log(this.state)
+      })
+    })
+  })
+}
