@@ -5,9 +5,6 @@ import '../scss/components/quote.scss';
 class Quote extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
   }
 
   returnTags = (string) => {
@@ -28,9 +25,6 @@ class Quote extends Component {
       <div className="quote" id={`${quote.id}`}>
         <div className="quote--container">
           <div className="quote--photoarea">
-            <figure className="quote--figure">
-              <img className="quote--img" src="./img/jk_rowling--small.jpg"/>
-            </figure>
           </div>
           <div className="quote--content">
             <h2 className="quote--h2">
