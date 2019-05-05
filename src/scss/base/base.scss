@@ -8,7 +8,27 @@
 
 html {
   box-sizing: border-box;
-  font-size: 60%;
+  font-size: 63%;
+
+  @media only screen and (max-width: 64.5em) {
+    font-size: 58%;
+  }
+
+  @media only screen and (max-width: 59.26em) {
+    font-size: 45%;
+  }
+
+  @media only screen and (max-width: 46.5em) {
+    font-size: 38%;
+  }
+
+  @media only screen and (max-width: 32em) {
+    font-size: 31%;
+  }
+
+  @media only screen and (max-width: 25.438em) {
+    font-size: 29%;
+  }
 }
 
 body {

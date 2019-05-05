@@ -1,8 +1,20 @@
 .content {
   position: relative;
   margin: 7rem auto;
-  width: 50%;
+  width: 55%;
   padding: 4rem 2rem;
   background: transparent;
   border-radius: .8rem;
+
+  @media only screen and (max-width: 83.75em) {
+    width: 70%;
+  }
+
+  @media only screen and (max-width: 69em) {
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 25.438em) {
+    width: 95%;
+  }
 }
