@@ -3,12 +3,11 @@
   bottom: 0;
   width: 100%;
   left: 0;
-  padding: 3rem;
   transform: translateY(8rem);
   
   &--animation {
-    width: 7rem;
-    height: 7rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     border: .5rem solid;
     border-color:  rgba(47, 53, 66,.3) rgba(47, 53, 66,.3) rgba(47, 53, 66,.3) #fff;
